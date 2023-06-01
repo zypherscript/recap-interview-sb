@@ -12,6 +12,6 @@ public class TestComponent {
   }
 
   public void test() {
-    log.info("Calling Test Method %s".formatted(this.index));
+    log.info("Calling Test Method {}", this.index);
   }
 }

@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
+@ActiveProfiles("test")
 class ItvQsApplicationTests {
 
   @Autowired
