@@ -3,8 +3,9 @@ package com.example.itvqs;
 import com.example.itvqs.config.TestComponent;
 import com.example.itvqs.config.TestConfig;
 import com.example.itvqs.entity.Customer;
-import com.example.itvqs.repository.CustomerRepository;
+import com.example.itvqs.service.CustomerService;
 import java.util.stream.IntStream;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
+@Slf4j
 public class ItvQsApplication {
 
   public static void main(String[] args) {
@@ -29,14 +31,22 @@ public class ItvQsApplication {
 
   @Bean
   @Profile("!test")
-  CommandLineRunner runner(CustomerRepository customerRepository) {
+  CommandLineRunner runner(CustomerService customerService) {
     return args -> {
-      var posts = IntStream.range(0, 2)
+      var customers = IntStream.range(0, 2)
           .boxed()
           .map(i -> new Customer(null, "name".concat(String.valueOf(i)),
               "email%s@example.com".formatted(String.valueOf(i))))
           .toList();
-      customerRepository.saveAll(posts);
+      customers = customerService.saveAll(customers);
+
+      var customer = customers.get(0);
+      try {
+        customerService.updateCustomer(customer.getId(), "test@example.com");
+      } catch (Exception ignored) {
+      }
+
+      log.info(customer.getEmail());
     };
   }
 
