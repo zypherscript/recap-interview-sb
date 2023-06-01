@@ -3,3 +3,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+  docker:
+    compose:
+      skip:
+        in-tests: false
+      readiness:
+        tcp:
+          connect-timeout: 10s
+          read-timeout: 5s
+      lifecycle-management: start-and-stop
