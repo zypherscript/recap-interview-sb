@@ -26,9 +26,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurity {
 
-  @Value("${jwt.public.key}")
-  private RSAPublicKey publicKey;
-
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
@@ -38,7 +35,7 @@ public class WebSecurity {
         )
         .httpBasic(Customizer.withDefaults())
         .oauth2ResourceServer(oauth2 ->
-            oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())))
+            oauth2.jwt(Customizer.withDefaults()))
         .exceptionHandling((exceptions) -> exceptions
             .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
             .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
@@ -55,12 +52,14 @@ public class WebSecurity {
     return new InMemoryUserDetailsManager(user);
   }
 
-  private JwtDecoder jwtDecoder() {
+  @Bean
+  JwtDecoder jwtDecoder(@Value("${jwt.public.key}") RSAPublicKey publicKey) {
     return NimbusJwtDecoder.withPublicKey(publicKey).build();
   }
 
   @Bean
-  JwtEncoder jwtEncoder(@Value("${jwt.private.key}") RSAPrivateKey privateKey) {
+  JwtEncoder jwtEncoder(@Value("${jwt.public.key}") RSAPublicKey publicKey,
+      @Value("${jwt.private.key}") RSAPrivateKey privateKey) {
     var jwk = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
     var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
     return new NimbusJwtEncoder(jwks);
