@@ -12,3 +12,6 @@ spring:
           connect-timeout: 10s
           read-timeout: 5s
       lifecycle-management: start-and-stop
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub

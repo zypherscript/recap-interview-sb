@@ -2,6 +2,7 @@ package com.example.itvqs.controller;
 
 import com.example.itvqs.entity.Customer;
 import com.example.itvqs.repository.CustomerRepository;
+import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class CustomerController {
   private final CustomerRepository customerRepository;
 
   @GetMapping()
-  ResponseEntity<List<Customer>> customers() {
+  ResponseEntity<List<Customer>> customers(Principal user) {
     return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
   }
 
