@@ -5,6 +5,7 @@ import com.example.itvqs.repository.CustomerRepository;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/customers")
 @RequiredArgsConstructor
+@Slf4j
 public class CustomerController {
 
   /*
@@ -32,6 +34,7 @@ public class CustomerController {
 
   @GetMapping()
   ResponseEntity<List<Customer>> customers(Principal user) {
+    log.info(user.getName());
     return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
   }
 
