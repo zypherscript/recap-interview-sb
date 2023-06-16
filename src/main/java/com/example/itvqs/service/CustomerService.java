@@ -31,7 +31,7 @@ public class CustomerService {
     customerRepository.findById(-1L).orElseThrow();
   }
 
-  @Cacheable(value = "customerCache")
+  @Cacheable(value = "customerCache", key = "#root.methodName")
   public List<Customer> findCustomers() {
     return customerRepository.findAll();
   }

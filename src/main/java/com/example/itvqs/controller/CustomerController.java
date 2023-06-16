@@ -35,9 +35,10 @@ public class CustomerController {
   private final CustomerService customerService;
 
   @GetMapping()
-  ResponseEntity<List<Customer>> customers(Principal user) {
+  public ResponseEntity<?> customers(Principal user) {
     log.info(user.getName());
-    return ResponseEntity.ok(customerService.findCustomers());
+    var customers = customerService.findCustomers();
+    return ResponseEntity.ok(customers);
   }
 
   @GetMapping("/{name}")
