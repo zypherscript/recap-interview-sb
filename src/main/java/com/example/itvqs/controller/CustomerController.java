@@ -2,6 +2,7 @@ package com.example.itvqs.controller;
 
 import com.example.itvqs.entity.Customer;
 import com.example.itvqs.repository.CustomerRepository;
+import com.example.itvqs.service.CustomerService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +32,12 @@ public class CustomerController {
    */
 
   private final CustomerRepository customerRepository;
+  private final CustomerService customerService;
 
   @GetMapping()
   ResponseEntity<List<Customer>> customers(Principal user) {
     log.info(user.getName());
-    return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
+    return new ResponseEntity<>(customerService.findCustomers(), HttpStatus.OK);
   }
 
   @GetMapping("/{name}")
