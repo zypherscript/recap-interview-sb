@@ -7,7 +7,6 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +30,14 @@ public class CustomerController {
       consume any content type specified in the request.
    */
 
-  private final CustomerRepository customerRepository;
+  private final CustomerRepository customerRepository; //just for demo tho
+  //https://siamchamnankit.co.th/%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B8%E0%B8%9B-%E0%B8%81%E0%B8%8F%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AD%E0%B8%AD%E0%B8%81%E0%B9%81%E0%B8%9A%E0%B8%9A-uris-%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD-rest-api-design-rulebook-1fb2e3a7258f
   private final CustomerService customerService;
 
   @GetMapping()
   ResponseEntity<List<Customer>> customers(Principal user) {
     log.info(user.getName());
-    return new ResponseEntity<>(customerService.findCustomers(), HttpStatus.OK);
+    return ResponseEntity.ok(customerService.findCustomers());
   }
 
   @GetMapping("/{name}")
