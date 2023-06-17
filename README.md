@@ -5,3 +5,7 @@
 [Synchronization in Java, Part 1: Race conditions, locks, and conditions](https://blogs.oracle.com/javamagazine/post/java-thread-synchronization-raceconditions-locks-conditions)
 
 [Synchronization in Java, Part 2: The synchronized keyword](https://blogs.oracle.com/javamagazine/post/java-thread-synchronization-synchronized-blocks-adhoc-locks)
+
+[Testing with CSRF Protection](https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html)
+
+[Double Submit Cookie](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie)
