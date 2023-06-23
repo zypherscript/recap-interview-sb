@@ -1,13 +1,17 @@
 package com.example.itvqs.service;
 
+import com.example.itvqs.dto.CustomerDTO;
 import com.example.itvqs.entity.Customer;
+import com.example.itvqs.mapper.CustomerMapper;
 import com.example.itvqs.repository.CustomerRepository;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +42,13 @@ public class CustomerService {
   @Cacheable(value = "customerCache", key = "#root.methodName")
   public List<Customer> findCustomers() {
     return customerRepository.findAll();
+  }
+
+  @Async
+  public CompletableFuture<List<CustomerDTO>> findAllAsync() {
+    var users = customerRepository.findAllAsync();
+    return users.thenApply(
+        customers -> customers.stream().map(CustomerMapper.INSTANCE::customerToCustomerDTO)
+            .toList());
   }
 }

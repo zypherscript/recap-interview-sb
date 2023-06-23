@@ -1,10 +1,12 @@
 package com.example.itvqs.controller;
 
+import com.example.itvqs.dto.CustomerDTO;
 import com.example.itvqs.entity.Customer;
 import com.example.itvqs.repository.CustomerRepository;
 import com.example.itvqs.service.CustomerService;
 import java.security.Principal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,11 @@ public class CustomerController {
     log.info(user.getName());
     var customers = customerService.findCustomers();
     return ResponseEntity.ok(customers);
+  }
+
+  @GetMapping("/async")
+  public CompletableFuture<List<CustomerDTO>> customersAsync() {
+    return customerService.findAllAsync();
   }
 
   @GetMapping("/{name}")
