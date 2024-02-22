@@ -9,3 +9,6 @@
 [Testing with CSRF Protection](https://docs.spring.io/spring-security/reference/servlet/test/mockmvc/csrf.html)
 
 [Double Submit Cookie](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie)
+
+#Note: recap/re-learn all these stuff > transactional!, spring in da hood, jpa > query ORm, indexing
+db, stateless vs stateful, tracing: zipkin, n more!!!
